@@ -1141,6 +1141,7 @@ class Aluno {
     }
 
 }
+
 // ------- in-file thoughts -------
 // So... Wierd to do things blindly //[P.4] not so blind anymore, but still
 // inefficient
@@ -1155,7 +1156,8 @@ class Aluno {
 // Readme created.
 // Escola.matricularAluno() modified to return the Aluno created.
 // Minor changes to reciprocrate in contrato to maintain cohesion.
-// Still some documentation to be done, and some incosistencies to be taken care of
+// Still some documentation to be done, and some incosistencies to be taken care
+// of
 // ------- End P.4 -------
 public class App {
     /* Keep track of created objects not the best implementation */
@@ -1283,16 +1285,17 @@ public class App {
             } else if (arg.equals("motorista")) {
                 PersonalInfo _pi = new PersonalInfo();
                 _pi.request();
-                System.out.print("Categoria da Habilitacao: ");
+                System.out.print("Categoria da Habilitação: ");
                 String _catHab = ScannerImpl.scanner.nextLine();
-                System.out.print("Numero da Habilitacao: ");
+                System.out.print("Número da Habilitação: ");
                 String _numHab = ScannerImpl.scanner.nextLine();
                 System.out.print("Tipo: [0 - CLT, 1 - PJ]");
                 int _tipo = ScannerImpl.reqInteger(false);
                 int _numContrato = 0;
 
                 if (_tipo == 1) {
-                    _numContrato = ScannerImpl.reqInteger(false);
+                    System.out.print("Número do contrato: ");
+                    _numContrato = ScannerImpl.reqInteger(true);
                 }
                 var _end = new Endereço();
                 _end.request();
@@ -1305,15 +1308,16 @@ public class App {
                 System.out.print("Modelo: ");
                 String _modelo = ScannerImpl.scanner.nextLine();
                 System.out.print("Ano: ");
-                int _yr = ScannerImpl.reqInteger(false);
+                int _yr = ScannerImpl.reqInteger(true);
                 System.out.print("Capacidade: ");
-                int _cap = ScannerImpl.reqInteger(false);
+                int _cap = ScannerImpl.reqInteger(true);
                 System.out.print("Tipo: [0 - Própio, 1 - Alugado] [padrao: 0]");
                 int _tipo = ScannerImpl.reqInteger(false);
                 int _numContrato = 0;
 
                 if (_tipo == 1) {
-                    _numContrato = ScannerImpl.reqInteger(false);
+                    System.out.print("Número do contrato: ");
+                    _numContrato = ScannerImpl.reqInteger(true);
                 }
                 var _car = _tipo == 1 ? new Veiculo(_placa, _yr, _modelo, _cap, 1, _numContrato)
                         : new Veiculo(_placa, _yr, _modelo, _cap, 0);
@@ -1325,9 +1329,9 @@ public class App {
                 System.out.println("Data de Termino: ");
                 LocalDate _end = ScannerImpl.reqDate(true);
                 System.out.println("Valor: ");
-                int _val = ScannerImpl.reqInteger(false);
-                System.out.println("Numero do Contrato: ");
-                int _numContrato = ScannerImpl.reqInteger(false);
+                int _val = ScannerImpl.reqInteger(true);
+                System.out.print("Número do contrato: ");
+                int _numContrato = ScannerImpl.reqInteger(true);
                 Contrato _contrato = new Contrato(_numContrato, _start, _end, _val);
                 _contratos.add(_contrato);
                 System.out.println("Contrato adicionado.");
@@ -1429,7 +1433,7 @@ public class App {
 
             if (_alunos.size() <= 0) {
                 System.out.println("Não há nenhum aluno registrado no sistema.");
-            return;
+                return;
             }
             boolean found = false;
             int _alunoIndex = 0;
@@ -1461,9 +1465,7 @@ public class App {
                             + "' é invalido, nenhuma mudança efetivada.");
             } else
                 System.out.println("Não existe nenhum aluno com nome civil ou cpf: '" + arg + "'.");
-        } else
-
-        {
+        } else {
             System.out.println(" O comando: '" + cmd + "', nāo foi reconhcido como um comando valido.");
         }
     }
