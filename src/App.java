@@ -1,6 +1,8 @@
 
 /* Author: Vitor Mattedi Carvalho. 
-   Date: 27/09/2023 
+   Date: 13/09/2023 [P. 1 & 2]
+   Date: 27/09/2023 [P.3]
+   Date: 19/10/2023 [P.4]
    Project: Atividade Incremental
         Atividade Incremental da materia POO MATA 55 UFBA. 
 */
@@ -299,9 +301,9 @@ class Rota {
 }
 
 /*
- * General debugger to lower the clog during ux
+ * General Debugger to lower the clog during ux
  */
-class debugger {
+class Debugger {
     static boolean enabled = true;
 
     /**
@@ -316,9 +318,9 @@ class debugger {
     }
 
     /**
-     * Enables/Disbales the debugger
+     * Enables/Disbales the Debugger
      * 
-     * @param enable The desired value of the debugger
+     * @param enable The desired value of the Debugger
      */
     static void enable(boolean enable) {
         enabled = enable;
@@ -588,7 +590,7 @@ class Escola {
     private void executeTranfer(Aluno transferee, Escola destin) {
         destin.matricularAluno(transferee.getPersonalInfo(), transferee.getEndereco(), transferee.getSerie());
         alunos.remove(transferee);
-        debugger.log_e("Aluno: " + nome + " transferido para a escola: " + destin.getNome());
+        Debugger.log_e("Aluno: " + nome + " transferido para a escola: " + destin.getNome());
     }
 
     /**
@@ -603,7 +605,7 @@ class Escola {
                 executeTranfer(aluno, destino);
             }
         }
-        debugger.log_e("Aluno: " + nome + " não existe nesta escola.");
+        Debugger.log_e("Aluno: " + nome + " não existe nesta escola.");
     }
 
     /**
@@ -618,7 +620,7 @@ class Escola {
                 executeTranfer(aluno, destino);
             }
         }
-        debugger.log_e("Aluno com a matricula: " + Aluno.getMatriculaString(matricula) + " não existe nesta escola.");
+        Debugger.log_e("Aluno com a matricula: " + Aluno.getMatriculaString(matricula) + " não existe nesta escola.");
     }
 
     public Aluno matricularAluno(PersonalInfo personalInfo, Endereço endereco, String serie) {
@@ -630,7 +632,7 @@ class Escola {
             }
         }
         if (_exists) {
-            debugger.log_e("Error: Aluno ja cadastrado!");
+            Debugger.log_e("Error: Aluno ja cadastrado!");
         }
         alunos.add(_alumn);
         return _alumn;
@@ -663,7 +665,7 @@ class Escola {
             _all += aluno.print();
             _all += "\n";
         }
-        debugger.log_e(_all);
+        Debugger.log_e(_all);
         return _all;
     }
 
@@ -963,10 +965,10 @@ class Contrato {
 
     public boolean addVeiculo(Veiculo veiculo) {
         if (!veiculo.isAlugado()) {
-            debugger.log_e("Veiculo não eh alugado");
+            Debugger.log_e("Veiculo não eh alugado");
             return false;
         } else if (veiculos.contains(veiculo)) {
-            debugger.log_e("Veiculo ja existe no contrato");
+            Debugger.log_e("Veiculo ja existe no contrato");
             return false;
         }
         veiculos.add(veiculo);
@@ -976,10 +978,10 @@ class Contrato {
 
     public boolean addMotorista(Motorista motorista) {
         if (!motorista.isTerceirizado()) {
-            debugger.log_e("Motorista não eh terceirizado");
+            Debugger.log_e("Motorista não eh terceirizado");
             return false;
         } else if (motoristas.contains(motorista)) {
-            debugger.log_e("Motorista ja existe no contrato");
+            Debugger.log_e("Motorista ja existe no contrato");
             return false;
         }
         motoristas.add(motorista);
@@ -1139,12 +1141,11 @@ class Aluno {
     }
 
 }
-
+// ------- in-file thoughts -------
 // So... Wierd to do things blindly //[P.4] not so blind anymore, but still
 // inefficient
 // Check on Date -> Calendar change. //[P.4] LocalDate is not deprecated.
-// Changes
-// made, all code is on support.
+// Changes made, all code is now on LTS.
 // Debugger Added.
 // ------- End P.3 -------
 // Added Main function (ui).
@@ -1154,6 +1155,7 @@ class Aluno {
 // Readme created.
 // Escola.matricularAluno() modified to return the Aluno created.
 // Minor changes to reciprocrate in contrato to maintain cohesion.
+// Still some documentation to be done, and some incosistencies to be taken care of
 // ------- End P.4 -------
 public class App {
     /* Keep track of created objects not the best implementation */
@@ -1169,6 +1171,7 @@ public class App {
 
         System.out.println("Bem vindo ao sistema SchoolBus by VMC");
         boolean quit = false;
+        Debugger.enabled = false;
         String _input = "";
         while (!quit) {
             Menu();
@@ -1177,13 +1180,13 @@ public class App {
             if (index > -1) {
                 String command = _input.substring(0, index);
                 String arg = _input.substring(index + 1);
-                debugger.log_e("index: [" + index + "] cmd: '" + command + "', arg:'" + arg + "'.");
+                Debugger.log_e("input: index: [" + index + "] cmd: '" + command + "', arg:'" + arg + "'.");
                 handleCommand(command, arg);
             } else if (_input.equals("quit") || _input.equals("q")) {
                 quit = true;
             } else if (_input.equals("debug")) {
-                debugger.enabled = !debugger.enabled;
-                System.out.println("estado do debugador: " + debugger.enabled);
+                Debugger.enabled = !Debugger.enabled;
+                System.out.println("estado do debugador: " + Debugger.enabled);
             } else {
                 System.out.println("O input: '" + _input + "', nāo foi reconhcido como um comando valido.--");
             }
